@@ -1,0 +1,4 @@
+#!/bin/bash
+ls
+rm student_work/TinkoffCalculatorUITests/TinkoffCalculatorUITests.swift
+cp TinkoffCalculatorUITests.swift student_work/TinkoffCalculatorUITests/TinkoffCalculatorUITests.swift

@@ -1,0 +1,59 @@
+name: EDU CI
+
+on:
+  repository_dispatch:
+
+env:
+  pull_req_url: ${{github.event.client_payload.pull_request_url}}
+  token: ${{github.event.client_payload.token_csrf}}
+  github_token: ${{github.event.client_payload.github_token}}
+  task_id: ${{github.event.client_payload.task_id}}
+  adapter_url: ${{github.event.client_payload.adapter_url}}
+  task_score: 0
+  max_score: 1
+  status: Done
+
+jobs:
+  build:
+    name: Homework 11
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Clone student repository
+        run: |
+          sudo git clone ${{env.pull_req_url}} student_work
+          sudo chmod -R 777 ./student_work
+
+      - name: AddTestToProject
+        run: |
+          sudo chmod +x test_replacer && ./test_replacer
+
+      - name: Test
+        working-directory: student_work
+        run: |
+          xcodebuild clean test -project TinkoffCalculator.xcodeproj -scheme TinkoffCalculator -destination "platform=iOS Simulator,id=324B6F92-6AF6-4247-9A1B-D237B71ACE56" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+
+      - name: Set score
+        if: ${{ !failure() }}
+        run: |
+          echo "task_score=$(expr ${{env.task_score}} + 1)" >> "$GITHUB_ENV"
+
+      - name: Set status
+        if: ${{ failure() }}
+        run: |
+          echo "status=Errors" >> "$GITHUB_ENV"
+
+      - name: Hello edu, i'm coming for you
+        if: ${{ always() }}
+        run: |
+          curl \
+          -X PUT \
+          -H "Accept: application/vnd.github.v3+json" \
+          ${{ env.adapter_url }} \
+          -d '{"token_csrf":"${{ env.token}}",
+          "ci_score":${{env.task_score}},
+          "ci_max_score":${{env.max_score}},
+          "ci_status":"${{env.status}}" }'
