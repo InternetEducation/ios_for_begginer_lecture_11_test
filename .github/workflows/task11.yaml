@@ -34,7 +34,7 @@ jobs:
       - name: Test
         working-directory: student_work
         run: |
-          xcodebuild clean test -project TinkoffCalculator.xcodeproj -scheme TinkoffCalculator -destination "platform=iOS Simulator,id=324B6F92-6AF6-4247-9A1B-D237B71ACE56" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+          xcodebuild clean test -project TinkoffCalculator.xcodeproj -scheme TinkoffCalculator -destination "platform=iOS Simulator,id=F0ABC98C-20ED-42B3-88C8-77815BB9B0C5" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
 
       - name: Set score
         if: ${{ !failure() }}
