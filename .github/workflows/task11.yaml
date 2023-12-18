@@ -10,7 +10,7 @@ env:
   task_id: ${{github.event.client_payload.task_id}}
   adapter_url: ${{github.event.client_payload.adapter_url}}
   task_score: 0
-  max_score: 1
+  max_score: 6
   status: Done
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
       - name: Set score
         if: ${{ !failure() }}
         run: |
-          echo "task_score=$(expr ${{env.task_score}} + 1)" >> "$GITHUB_ENV"
+          echo "task_score=$(expr ${{env.task_score}} + 6)" >> "$GITHUB_ENV"
 
       - name: Set status
         if: ${{ failure() }}
