@@ -29,7 +29,7 @@ class TinkoffCalculatorUITests: XCTestCase {
             XCTAssertTrue(button.isHittable, "Кнопка \($0) не нажимается.")
         }
 
-        validateHistoryLabel(expectedVlaue: "0", in: app)
+        validateHistoryLabel(expectedVlaue: "NoData", in: app)
 
         app.buttons["2"].tap()
         app.buttons["7"].tap()
