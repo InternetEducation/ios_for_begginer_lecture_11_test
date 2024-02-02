@@ -7,7 +7,7 @@ import XCTest
 
 class TinkoffCalculatorUITests: XCTestCase {
 
-    let navigationButtonTitle = "toHistoryPageButton"
+    let navigationButtonTitle = "historyButton"
 
     override func setUp() {
         continueAfterFailure = false
